@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="https://cdn.pixabay.com/photo/2018/03/29/21/51/cute-3273789_960_720.jpg" alt="">
+    <script>
+        const fetchPromise = fetch(
+        "https://cdn.pixabay.com/photo/2018/03/29/21/51/cute-3273789_960_720.jpg", //promises ci permettono di vedere lo stato dell'operazione
+        );
+        /*fetchPromise.then((response) => {
+        const blobPromise = response.blob(); //.blob ci permette di scaricare le informazioni dell'immagine (come dimensioni, ratio, ecc...) e non l'immagine stessa
+        blobPromise.then((myBlob) => {
+        let objectURL = URL.createObjectURL(myBlob);
+        let image = document.createElement('img');
+        image.src = objectURL;
+        document.body.appendChild(image); //crea questo elemento "<img src="blob:null/54da9e7d-e083-49f4-93a6-d164e7052f8b">"
+        });
+        });*/
+
+
+
+
+
+        //MODO PIù SINTETICO PER SCRIVERLO (metodo del chaining)
+        /*fetchPromise
+        .then((response) => response.blob()) //.blob ci permette di scaricare le informazioni dell'immagine (come dimensioni, ratio, ecc...) e non l'immagine stessa
+        .then((myBlob) => {
+        let objectURL = URL.createObjectURL(myBlob);
+        let image = document.createElement('img');
+        image.src = objectURL;
+        document.body.appendChild(image); //crea questo elemento "<img src="blob:null/54da9e7d-e083-49f4-93a6-d164e7052f8b">"
+        });*/
+
+
+
+
+
+        
+        //GESTIRE L'ERRORE
+        fetchPromise
+            .then((response) => {
+            if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+            }
+            return response.blob();
+            })
+            .then((myBlob) => {
+            let objectURL = URL.createObjectURL(myBlob);
+            let image = document.createElement('img');
+            image.src = objectURL;
+            document.body.appendChild(image);
+            })
+            .catch((error) => {
+            console.error(`Could not get image: ${error}`);
+            });
+    </script>
+</body>
+</html>
